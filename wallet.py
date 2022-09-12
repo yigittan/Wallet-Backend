@@ -1,5 +1,6 @@
 import bcrypt
 from flask import jsonify
+from bson.objectid import ObjectId
 
 class WalletService:
     def __init__(self,storage):
@@ -25,19 +26,22 @@ class WalletService:
         return wallet
 
     def transfer(self,id,amount,to):
-        wallet = self.storage.get(id)
+        id = ObjectId(id)
+        to = ObjectId(to)
+        wallet = self.storage.get_by_id(id)
         self.storage.transfer(id,amount,to)
         return wallet
 
     def withdraw(self,id,amount):
-        wallet = self.storage.get(id)
+        id = ObjectId(id)
         self.storage.withdraw(id,amount)
+        wallet = self.storage.get_by_id(id)
         return wallet
 
     def deposit(self,id,amount):
-        wallet = self.storage.get(id)
         self.storage.deposit(id,amount)
-        return {'name':wallet['name']}
+        wallet = self.storage.get_by_id(id)
+        return wallet
         
 
     

@@ -72,12 +72,12 @@ def get_by_email(email):
 @app.route('/v1/wallets/<string:id>/transfer',methods=['PUT'], endpoint ='transfer')
 @http_error_handler
 def transfer(id):
-    body = request.get_json
+    body = request.get_json()
     amount = body['amount']
     to = body['to']
     service.transfer(id,amount,to)
-
-    return None,STATUS_NO_CONTENT
+    wallet = service.get_by_id(id)
+    return jsonify(wallet),STATUS_OK
 
 @app.route('/v1/wallets/<string:id>/withdraw' , methods= ['PUT'], endpoint = 'withdraw')
 @http_error_handler
