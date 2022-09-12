@@ -21,10 +21,10 @@ class WalletMongoStorage:
             "balance":wallet['balance'],
         } for wallet in wallets]
     
-    def get(self,id):
-        wallet = self.db.find_one({'id':id})
+    def get_by_id(self,id):
+        wallet = self.db.find_one({'_id':id})
         return {
-            "id":wallet['_id'],
+            "id":str(ObjectId(wallet['_id'])),
             "name":wallet['name'],
             "balance":wallet['balance']
         }
@@ -32,7 +32,7 @@ class WalletMongoStorage:
     def get_by_email(self,email):
         wallet = self.db.find_one({'email':email})
         return {
-            "id":str(wallet['_id']),
+            "id":str(ObjectId(wallet['_id'])),
             "name":wallet['name'],
             "balance":wallet['balance']
         }

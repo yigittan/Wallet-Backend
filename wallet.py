@@ -14,25 +14,25 @@ class WalletService:
     def get_all(self):
         return self.storage.get_all()
 
-    def get(self,id):
-        wallet = self.storage.get(id)
+    def get_by_id(self,id):
+        wallet = self.storage.get_by_id(id)
         if wallet is None:
             return {'message':'wallet not found'}
-        return {'name':wallet['name']}
+        return wallet
 
     def get_by_email(self,email):
         wallet = self.storage.get_by_email(email)
-        return {'name':wallet['name']}
+        return wallet
 
     def transfer(self,id,amount,to):
         wallet = self.storage.get(id)
         self.storage.transfer(id,amount,to)
-        return {'name':wallet['name']}
+        return wallet
 
     def withdraw(self,id,amount):
         wallet = self.storage.get(id)
         self.storage.withdraw(id,amount)
-        return {'name':wallet['name']}
+        return wallet
 
     def deposit(self,id,amount):
         wallet = self.storage.get(id)

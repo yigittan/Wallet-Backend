@@ -32,11 +32,11 @@ def http_error_handler(func):
             return create_err_msg(e) , STATUS_INTERNAL_SERVER_ERROR
     return handler
 
-@app.route('/')
+@app.route('/') # İT İS WORKİNG 
 def index():
     return {'message':"Welcome to the index page"}
 
-@app.route('/v1/wallets', methods=['POST'], endpoint='create')
+@app.route('/v1/wallets', methods=['POST'], endpoint='create') # İT İS WORKİNG 
 @http_error_handler
 def create():
     body = request.get_json()
@@ -50,23 +50,24 @@ def create():
 
     return {'id':str(ObjectId(id))}, STATUS_CREATED
 
-@app.route('/v1/wallets',methods=['GET'],endpoint='get_all_wallet')
+@app.route('/v1/wallets',methods=['GET'],endpoint='get_all_wallet') # İT İS WORKİNG
 @http_error_handler
 def get_all_wallet():
     wallets = service.get_all()
     return jsonify(wallets), STATUS_OK
 
-@app.route('/v1/wallets/<string:id>', methods=['GET'],endpoint='get_wallet')
+@app.route('/v1/wallets/<string:id>', methods=['GET'],endpoint='get_wallet') # İT İS WORKİNG 
 @http_error_handler
 def get_wallet(id):
-    wallet = service.get(id)
+    id = ObjectId(id)
+    wallet = service.get_by_id(id)
     return jsonify(wallet),STATUS_OK
 
-@app.route('/v1/wallets/<string:email>',methods=['GET'] , endpoint='get_by_email')
+@app.route('/v1/wallets/by/<string:email>',methods=['GET'] , endpoint='get_by_email') # İT İS WORKİNG
 @http_error_handler
 def get_by_email(email):
     wallet = service.get_by_email(email)
-    return jsonify(wallet)
+    return jsonify(wallet),STATUS_OK
 
 @app.route('/v1/wallets/<string:id>/transfer',methods=['PUT'], endpoint ='transfer')
 @http_error_handler
