@@ -60,3 +60,7 @@ class WalletMongoStorage:
         wallet = self.db.find_one({'_id':id})
         wallet['balance'] += amount
         self.db.update_one({'_id':id}, {"$set":{"balance":wallet['balance']}})
+
+    def delete(self,id):
+        id = ObjectId(id)
+        self.db.delete_one({'_id':id})

@@ -42,6 +42,12 @@ class WalletService:
         self.storage.deposit(id,amount)
         wallet = self.storage.get_by_id(id)
         return wallet
+    
+    def delete(self,id):
+        id = ObjectId(id)
+        self.storage.delete(id)
+        return {'message':f'{id} sine sahip wallet silindi '}
+
         
 
     

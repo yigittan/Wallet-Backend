@@ -94,6 +94,12 @@ def deposit(id):
     amount = body['amount']
     service.deposit(id,amount)
 
+@app.route('/v1/wallets/<string:id>/delete' , methods=['DELETE'])
+@http_error_handler
+def delete(id):
+    service.delete(id)
+    return {'message':f'{id} id sine sahip wallet silindi'}
+
 if __name__ == "__main__":
     app.secret_key ="01234"
     app.run(debug=True,host="127.0.0.1",port=3000)
